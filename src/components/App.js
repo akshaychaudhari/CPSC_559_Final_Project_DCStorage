@@ -1,11 +1,12 @@
-//import DStorage from '../abis/DStorage.json'
+import DCStorage from '../abis/DCStorage.json'
+import { Web3Storage } from "web3.storage";
 import React, { Component } from 'react';
 import Navbar from './Navbar'
 import Main from './Main'
 import Web3 from 'web3';
 import './App.css';
 
-//Declare IPFS
+const client = new Web3Storage({token: ""});
 
 class App extends Component {
 
@@ -28,52 +29,84 @@ class App extends Component {
   }
 
   async loadBlockchainData() {
-    //Declare Web3
-
-    //Load account
-
-    //Network ID
-
-    //IF got connection, get data from contracts
-      //Assign contract
-
-      //Get files amount
-
-      //Load files&sort by the newest
-
-    //Else
-      //alert Error
-
+    const web3 = window.web3;
+    const accounts = await web3.eth.getAccounts();
+    this.setState({account: accounts[0]});
+    const networkId = await web3.eth.net.getId()
+    const networkData = DCStorage.networks[networkId]
+    if(networkData) {
+      const dcstorage = new web3.eth.Contract(DCStorage.abi, networkData.address)
+      this.setState({ dcstorage })
+      const filesCount = await dcstorage.methods.fileCount().call()
+      this.setState({ filesCount })
+      for (var i = filesCount; i >= 1; i--) {
+        const file = await dcstorage.methods.files(i).call()
+        this.setState({
+          files: [...this.state.files, file]
+        })
+      }
+    } else {
+      window.alert('Error! The DCStorage contract not deployed on the detected network!');
+    }
+    this.setState({loading: false})
   }
 
-  // Get file from user
   captureFile = event => {
+    event.preventDefault()
+    const file = event.target.files[0]
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      this.setState({
+        buffer: Buffer(reader.result),
+        type: file.type,
+        name: file.name,
+        rawFile: file
+      })
+      console.log('buffer', this.state.rawFile)
+    }
   }
 
-
-  //Upload File
-  uploadFile = description => {
-
-    //Add file to the IPFS
-
-      //Check If error
-        //Return error
-
-      //Set state to loading
-
-      //Assign value for the file without extension
-
-      //Call smart contract uploadFile function 
-
+  uploadFile = async description => {
+    // console.log("Submitting file to IPFS...")
+    const rootCid = await client.put([this.state.rawFile]);
+    console.log(rootCid);
+    // ipfs.add(this.state.buffer, (error, result) => {
+    //   // console.log('IPFS result', result.size)
+    //   if(error) {
+    //     console.error(error)
+    //     return
+    //   }
+    //   this.setState({ loading: true })
+    //   if(this.state.type === ''){
+    //     this.setState({type: 'none'})
+    //   }
+    //   this.state.dcstorage.methods.uploadFile(result[0].hash, result[0].size, this.state.type, this.state.name, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
+    //     this.setState({
+    //      loading: false,
+    //      type: null,
+    //      name: null
+    //    })
+    //    window.location.reload()
+    //   }).on('error', (e) =>{
+    //     window.alert('Error')
+    //     this.setState({loading: false})
+    //   })
+    // })
   }
 
-  //Set states
   constructor(props) {
     super(props)
     this.state = {
+      account: '',
+      dcstorage: null,
+      files: [],
+      loading: false,
+      type: null,
+      name: null
     }
-
-    //Bind functions
+    this.uploadFile = this.uploadFile.bind(this)
+    this.captureFile = this.captureFile.bind(this)
   }
 
   render() {
