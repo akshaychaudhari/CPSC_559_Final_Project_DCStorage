@@ -41,6 +41,7 @@ class App extends Component {
       this.setState({ filesCount })
       for (var i = filesCount; i >= 1; i--) {
         const file = await dcstorage.methods.files(i).call()
+        console.log(file)
         this.setState({
           files: [...this.state.files, file]
         })
@@ -59,8 +60,9 @@ class App extends Component {
     reader.onloadend = () => {
       this.setState({
         buffer: Buffer(reader.result),
-        type: file.type,
         name: file.name,
+        type: file.type,
+        size: file.size,
         rawFile: file
       })
       console.log('buffer', this.state.rawFile)
@@ -70,30 +72,25 @@ class App extends Component {
   uploadFile = async description => {
     // console.log("Submitting file to IPFS...")
     const rootCid = await client.put([this.state.rawFile]);
+    const info = await client.status(rootCid);
+    console.log(info)
     console.log(rootCid);
-    // ipfs.add(this.state.buffer, (error, result) => {
-    //   // console.log('IPFS result', result.size)
-    //   if(error) {
-    //     console.error(error)
-    //     return
-    //   }
-    //   this.setState({ loading: true })
-    //   if(this.state.type === ''){
-    //     this.setState({type: 'none'})
-    //   }
-    //   this.state.dcstorage.methods.uploadFile(result[0].hash, result[0].size, this.state.type, this.state.name, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
-    //     this.setState({
-    //      loading: false,
-    //      type: null,
-    //      name: null
-    //    })
-    //    window.location.reload()
-    //   }).on('error', (e) =>{
-    //     window.alert('Error')
-    //     this.setState({loading: false})
-    //   })
-    // })
-  }
+      this.setState({ loading: true })
+      if(this.state.type === ''){
+        this.setState({type: 'none'})
+      }
+      this.state.dcstorage.methods.uploadFile(rootCid, this.state.size, this.state.type, this.state.name, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
+        this.setState({
+         loading: false,
+         type: null,
+         name: null
+       })
+       window.location.reload()
+      }).on('error', (e) =>{
+        window.alert('Error')
+        this.setState({loading: false})
+      })
+    }
 
   constructor(props) {
     super(props)
