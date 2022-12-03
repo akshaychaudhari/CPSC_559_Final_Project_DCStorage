@@ -6,14 +6,14 @@ class Main extends Component {
 
   render() {
     return (
-      <div className="container-fluid mt-5 text-center">
+      <div className="container-fluid text-center">
         <div className="row">
           <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '1024px' }}>
             <div className="content">
               <p>&nbsp;</p>
-              <h1>DCStorage App Panel</h1>
-              <div className="card mb-3 mx-auto bg-dark" style={{ maxWidth: '512px' }}>
-                <h2 className="text-white text-monospace bg-dark"><b><ins>Share File</ins></b></h2>
+              <h1 style={{color: "#5c13ec", fontFamily: "copperplate"}}>CRYPTO BOX GLOBAL</h1>
+              <div className="card mb-3 mx-auto" style={{ maxWidth: '512px', fontFamily: "cursive", backgroundColor: "black" }}>
+                <h2 className='pt-4' style={{color: "#7c42ef"}}><b>Global Share</b></h2>
                   <form onSubmit={(event) => {
                     event.preventDefault()
                     const description = this.fileDescription.value
@@ -25,26 +25,26 @@ class Main extends Component {
                             id="fileDescription"
                             type="text"
                             ref={(input) => { this.fileDescription = input }}
-                            className="form-control text-monospace"
+                            className="form-control"
                             placeholder="description..."
                             required />
                       </div>
-                    <input type="file" onChange={this.props.captureFile} className="text-white text-monospace"/>
-                    <button type="submit" className="btn-primary btn-block"><b>Upload!</b></button>
+                    <input type="file" onChange={this.props.captureFile} className="text-white pb-3"/>
+                    <button type="submit" className="btn btn-block text-white" style={{backgroundColor: "#7c42ef"}}><b>Upload!</b></button>
                   </form>
               </div>
               <p>&nbsp;</p>
               <table className="table-sm table-bordered text-monospace" style={{ width: '1000px', maxHeight: '450px'}}>
                 <thead style={{ 'fontSize': '15px' }}>
-                  <tr className="bg-dark text-white">
-                    <th scope="col" style={{ width: '10px'}}>id</th>
-                    <th scope="col" style={{ width: '200px'}}>name</th>
-                    <th scope="col" style={{ width: '230px'}}>description</th>
-                    <th scope="col" style={{ width: '120px'}}>type</th>
-                    <th scope="col" style={{ width: '90px'}}>size</th>
-                    <th scope="col" style={{ width: '90px'}}>date</th>
-                    <th scope="col" style={{ width: '120px'}}>uploader/view</th>
-                    <th scope="col" style={{ width: '120px'}}>hash/view/get</th>
+                  <tr style={{backgroundColor: "#5c13ec", color: "white"}}>
+                    <th scope="col" style={{ width: '10px'}}>ID</th>
+                    <th scope="col" style={{ width: '200px'}}>Name</th>
+                    <th scope="col" style={{ width: '230px'}}>Description</th>
+                    <th scope="col" style={{ width: '120px'}}>Type</th>
+                    <th scope="col" style={{ width: '90px'}}>Size</th>
+                    <th scope="col" style={{ width: '90px'}}>Datetime</th>
+                    <th scope="col" style={{ width: '120px'}}>Uploader</th>
+                    <th scope="col" style={{ width: '120px'}}>View File</th>
                   </tr>
                 </thead>
                 { this.props.files.map((file, key) => {
