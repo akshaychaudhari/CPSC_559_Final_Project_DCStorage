@@ -49,7 +49,15 @@ contract BuildOrganization is DCStorage{
 
     function deleteOrganization(uint id) public {
         require(organizationToOwner[id] == msg.sender);
+        if(id >= organizations.length) return;
+        for (uint i = id; i < organizations.length - 1; i++){
+            organizations[i] = organizations[i + 1];
+        }
+        delete organizations[organizations.length - 1];
+        organizations.length--;
         delete organizationToOwner[id];
+        ownerOrganizationCount[msg.sender] = ownerOrganizationCount[msg.sender].sub(1);
+
     }
 
     function getOrganizations() external view returns(Organization[] memory) {
