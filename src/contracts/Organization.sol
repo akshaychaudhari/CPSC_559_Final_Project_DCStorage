@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.5.0;
+pragma experimental ABIEncoderV2;
 
 import "./DCStorage.sol";
 import "./safemath.sol";
@@ -27,11 +28,14 @@ contract BuildOrganization is DCStorage{
 
     mapping(address => uint) ownerOrganizationCount;
 
+    mapping(address => uint[]) addressToOrganizations;
+
     function createOrganization(string memory name, string memory description, bool privateBool, uint memberLimit, string memory passcode) public {
         uint id = organizations.length;
         organizations.push(Organization(id, name, description, msg.sender, privateBool, memberLimit, passcode, now));
         organizationToOwner[id] = msg.sender;
         ownerOrganizationCount[msg.sender] = ownerOrganizationCount[msg.sender].add(1);
+        addressToOrganizations[msg.sender].push(id);
     }
 
     function editOrganization(uint id, string memory name, string memory description, bool privateBool, uint memberLimit, string memory passcode) public {
@@ -48,7 +52,13 @@ contract BuildOrganization is DCStorage{
         delete organizationToOwner[id];
     }
 
+    function getOrganizations() external view returns(Organization[] memory) {
+        return organizations;
+    }
+
+    function getMemberships() external view returns(uint[] memory){
+        return addressToOrganizations[msg.sender];
+    }
+
 }
-
-
 
