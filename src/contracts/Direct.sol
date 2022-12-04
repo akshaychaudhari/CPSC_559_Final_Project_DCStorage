@@ -58,6 +58,24 @@ contract Direct is Membership{
     fileCount++;
     emit DirectFileUploaded(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender, _reciever, _isOneTimeLink);
   }
+
+  function currentUserFileIds() external view returns(uint [] memory) {
+    return addressToFileIds[msg.sender];
+  }
+
+  function fileDelete(uint id) public {
+    bool startDelete = false;
+    for(uint i = 0; i < addressToFileIds[msg.sender].length - 1; i++){
+        if(addressToFileIds[msg.sender][i] == id){
+            startDelete = true;
+        }
+        if(startDelete){
+            addressToFileIds[msg.sender][i] = addressToFileIds[msg.sender][i + 1];
+        }
+    }
+    delete addressToFileIds[msg.sender][addressToFileIds[msg.sender].length - 1];
+    addressToFileIds[msg.sender].length--;
+  }
   
 }
 
