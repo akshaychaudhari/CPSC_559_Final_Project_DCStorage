@@ -59,8 +59,8 @@ contract OrganizationUpload is Direct {
     emit OrganizationFileUploaded(organizationFileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender, _organizationId, _isFlagged);
   }
 
-  function currentUserFileIds() external view returns(uint [] memory) {
-    return addressToFileIds[msg.sender];
+  function currentOrganizationFileIds(uint id) external view returns(uint [] memory) {
+    return organizationToFileIds[id];
   }
 
   function fileDelete(uint id) public {
