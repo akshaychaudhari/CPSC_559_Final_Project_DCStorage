@@ -35,6 +35,9 @@ contract BuildOrganization is DCStorage{
     mapping(uint => address[]) organizationToAddresses;
 
     function createOrganization(string memory name, string memory description, bool privateBool, uint memberLimit, string memory passcode) public {
+        require(bytes(name).length > 0);
+        require(bytes(description).length > 0);
+        require(memberLimit > 0);
         if(privateBool == false){
             passcode = "";
         }else{
@@ -51,6 +54,9 @@ contract BuildOrganization is DCStorage{
     }
 
     function editOrganization(uint id, string memory name, string memory description, bool privateBool, uint memberLimit, string memory passcode) public {
+        require(bytes(name).length > 0);
+        require(bytes(description).length > 0);
+        require(memberLimit > 0);
         if(privateBool == false){
             passcode = "";
         }else{
