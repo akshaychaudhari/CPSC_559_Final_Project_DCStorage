@@ -10,7 +10,7 @@ import "./Membership.sol";
 contract Direct is Membership{
 
   string public name = "Crypto Box Direct";
-  uint public fileCount = 0;
+  uint public directFileCount = 0;
 
   mapping(uint => DirectFile) public directfiles;
 
@@ -53,10 +53,10 @@ contract Direct is Membership{
     require(msg.sender != address(0));
     require(_fileSize > 0);
     require(_reciever == address(_reciever));
-    directfiles[fileCount] = DirectFile(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender, _reciever, _isOneTimeLink);
-    addressToFileIds[_reciever].push(fileCount);
-    fileCount++;
-    emit DirectFileUploaded(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender, _reciever, _isOneTimeLink);
+    directfiles[directFileCount] = DirectFile(directFileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender, _reciever, _isOneTimeLink);
+    addressToFileIds[_reciever].push(directFileCount);
+    directFileCount++;
+    emit DirectFileUploaded(directFileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender, _reciever, _isOneTimeLink);
   }
 
   function currentUserFileIds() external view returns(uint [] memory) {
