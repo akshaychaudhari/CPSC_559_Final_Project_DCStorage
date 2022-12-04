@@ -30,12 +30,15 @@ contract BuildOrganization is DCStorage{
 
     mapping(address => uint[]) addressToOrganizations;
 
+    mapping(uint => address[]) organizationToAddresses;
+
     function createOrganization(string memory name, string memory description, bool privateBool, uint memberLimit, string memory passcode) public {
         uint id = organizations.length;
         organizations.push(Organization(id, name, description, msg.sender, privateBool, memberLimit, passcode, now));
         organizationToOwner[id] = msg.sender;
         ownerOrganizationCount[msg.sender] = ownerOrganizationCount[msg.sender].add(1);
         addressToOrganizations[msg.sender].push(id);
+        organizationToAddresses[id].push[msg.sender];
     }
 
     function editOrganization(uint id, string memory name, string memory description, bool privateBool, uint memberLimit, string memory passcode) public {
@@ -57,7 +60,6 @@ contract BuildOrganization is DCStorage{
         organizations.length--;
         delete organizationToOwner[id];
         ownerOrganizationCount[msg.sender] = ownerOrganizationCount[msg.sender].sub(1);
-
     }
 
     function getOrganizations() external view returns(Organization[] memory) {
