@@ -63,19 +63,20 @@ contract OrganizationUpload is Direct {
     return organizationToFileIds[id];
   }
 
-  function fileDelete(uint id) public {
+  function organizationFileDelete(uint fileId, uint organizationId) public {
+    require(msg.sender == organizations[organizationId].Owner);
     bool startDelete = false;
-    for(uint i = 0; i < addressToFileIds[msg.sender].length - 1; i++){
-        if(addressToFileIds[msg.sender][i] == id){
+    for(uint i = 0; i < organizationToFileIds[organizationId].length - 1; i++){
+        if(organizationToFileIds[organizationId][i] == fileId){
             startDelete = true;
         }
         if(startDelete){
-            addressToFileIds[msg.sender][i] = addressToFileIds[msg.sender][i + 1];
+            organizationToFileIds[organizationId][i] = organizationToFileIds[organizationId][i + 1];
         }
     }
-    delete addressToFileIds[msg.sender][addressToFileIds[msg.sender].length - 1];
-    addressToFileIds[msg.sender].length--;
-    delete directfiles[id];
+    delete organizationToFileIds[organizationId][organizationToFileIds[organizationId].length - 1];
+    organizationToFileIds[organizationId].length--;
+    delete organizationfiles[fileId];
   }
   
 }
