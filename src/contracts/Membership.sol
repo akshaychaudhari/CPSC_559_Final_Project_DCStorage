@@ -9,6 +9,11 @@ import "./Organization.sol";
 contract Membership is BuildOrganization{
 
     function joinOrganization(uint id) public {
+        uint memberLimit = organizations[id].MemberLimit;
+        if(organizationToAddresses[id].length >= memberLimit){
+            return;
+        }
+
         uint[] memory orgIds = addressToOrganizations[msg.sender];
         for(uint i; i < orgIds.length; i++){
             if(id == orgIds[i]){
