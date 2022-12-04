@@ -38,7 +38,7 @@ contract BuildOrganization is DCStorage{
         organizationToOwner[id] = msg.sender;
         ownerOrganizationCount[msg.sender] = ownerOrganizationCount[msg.sender].add(1);
         addressToOrganizations[msg.sender].push(id);
-        organizationToAddresses[id].push[msg.sender];
+        organizationToAddresses[id].push(msg.sender);
     }
 
     function editOrganization(uint id, string memory name, string memory description, bool privateBool, uint memberLimit, string memory passcode) public {
