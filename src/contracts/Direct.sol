@@ -75,6 +75,7 @@ contract Direct is Membership{
     }
     delete addressToFileIds[msg.sender][addressToFileIds[msg.sender].length - 1];
     addressToFileIds[msg.sender].length--;
+    delete directfiles[id];
   }
   
 }
