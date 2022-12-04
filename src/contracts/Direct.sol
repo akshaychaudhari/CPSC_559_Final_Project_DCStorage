@@ -45,7 +45,7 @@ contract Direct is Membership{
   constructor() public {
   }
 
-  function uploadFile(string memory _fileHash, uint _fileSize, string memory _fileType, string memory _fileName, string memory _fileDescription, address _reciever, bool _isOneTimeLink) public {
+  function uploadDirectFile(string memory _fileHash, uint _fileSize, string memory _fileType, string memory _fileName, string memory _fileDescription, address _reciever, bool _isOneTimeLink) public {
     require(bytes(_fileHash).length > 0);
     require(bytes(_fileType).length > 0);
     require(bytes(_fileName).length > 0);
