@@ -11,6 +11,8 @@ contract BuildOrganization is DCStorage{
     using SafeMath32 for uint32;
     using SafeMath16 for uint16;
 
+    uint setId = 0;
+
     struct Organization {
         uint Id;
         string Name;
@@ -33,12 +35,13 @@ contract BuildOrganization is DCStorage{
     mapping(uint => address[]) organizationToAddresses;
 
     function createOrganization(string memory name, string memory description, bool privateBool, uint memberLimit, string memory passcode) public {
-        uint id = organizations.length;
+        uint id = setId;
         organizations.push(Organization(id, name, description, msg.sender, privateBool, memberLimit, passcode, now));
         organizationToOwner[id] = msg.sender;
         ownerOrganizationCount[msg.sender] = ownerOrganizationCount[msg.sender].add(1);
         addressToOrganizations[msg.sender].push(id);
         organizationToAddresses[id].push(msg.sender);
+        setId++;
     }
 
     function editOrganization(uint id, string memory name, string memory description, bool privateBool, uint memberLimit, string memory passcode) public {
@@ -52,7 +55,12 @@ contract BuildOrganization is DCStorage{
 
     function deleteOrganization(uint id) public {
         require(organizationToOwner[id] == msg.sender);
-        delete organizations[id];
+        if(id >= organizations.length) return;
+        for (uint i = id; i < organizations.length - 1; i++){
+            organizations[i] = organizations[i + 1];
+        }
+        delete organizations[organizations.length - 1];
+        organizations.length--;
         delete organizationToOwner[id];
         ownerOrganizationCount[msg.sender] = ownerOrganizationCount[msg.sender].sub(1);
     }
