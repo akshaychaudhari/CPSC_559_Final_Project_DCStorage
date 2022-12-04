@@ -5,15 +5,16 @@ pragma experimental ABIEncoderV2;
 import "./DCStorage.sol";
 import "./safemath.sol";
 import "./Organization.sol";
+import "./Membership.sol";
 
 contract Direct is Membership{
 
   string public name = "Crypto Box Direct";
   uint public fileCount = 0;
 
-  mapping(uint => File) public directfiles;
+  mapping(uint => DirectFile) public directfiles;
 
-  mapping(address => uint) public addressToFileIds;
+  mapping(address => uint[]) public addressToFileIds;
   
   struct DirectFile{
     uint fileId;
@@ -28,7 +29,7 @@ contract Direct is Membership{
     bool isOneTimeLink;
   }
 
-  event FileUploaded(
+  event DirectFileUploaded(
     uint fileId,
     string fileHash,
     uint fileSize,
@@ -38,7 +39,7 @@ contract Direct is Membership{
     uint uploadTime,
     address payable uploader,
     address reciever,
-    bool isOneTimeLink,
+    bool isOneTimeLink
   );
 
   constructor() public {
@@ -51,14 +52,13 @@ contract Direct is Membership{
     require(bytes(_fileDescription).length > 0);
     require(msg.sender != address(0));
     require(_fileSize > 0);
-    require(bytes(_reciever) > 0);
-    files[fileCount] = File(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender, _reciever, _isOneTimeLink);
+    require(_reciever == address(_reciever));
+    directfiles[fileCount] = DirectFile(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender, _reciever, _isOneTimeLink);
     addressToFileIds[_reciever].push(fileCount);
     fileCount++;
-    emit FileUploaded(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender, _reciever, _isOneTimeLink);
+    emit DirectFileUploaded(fileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender, _reciever, _isOneTimeLink);
   }
   
 }
-
 
 
