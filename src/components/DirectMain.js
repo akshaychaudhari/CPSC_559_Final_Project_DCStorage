@@ -11,9 +11,9 @@ class DirectMain extends Component {
           <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '1024px' }}>
             <div className="content">
               <p>&nbsp;</p>
-              <h1 style={{color: "#5c13ec", fontFamily: "copperplate"}}>CRYPTO BOX GLOBAL</h1>
+              <h1 style={{color: "#5c13ec", fontFamily: "copperplate"}}>CRYPTO BOX DIRECT</h1>
               <div className="card mb-3 mx-auto" style={{ maxWidth: '512px', fontFamily: "cursive", backgroundColor: "black" }}>
-                <h2 className='pt-4' style={{color: "#7c42ef"}}><b>Global Share</b></h2>
+                <h2 className='pt-4' style={{color: "#7c42ef"}}><b>Direct Share</b></h2>
                   <form onSubmit={(event) => {
                     event.preventDefault()
                     const description = this.fileDescription.value

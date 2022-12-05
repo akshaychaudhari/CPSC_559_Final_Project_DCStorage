@@ -121,7 +121,7 @@ class App extends Component {
             />
         }
         <Routes>
-        <Route exact path="/direct" component={Direct}/>
+        <Route exact path="/direct" element={<Direct/>}/>
         </Routes>
       </div>
     );
