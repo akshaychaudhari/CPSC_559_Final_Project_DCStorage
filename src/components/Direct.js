@@ -1,10 +1,10 @@
-import DCStorage from '../abis/OrganizationUpload.json'
+import DCStorage from '../abis/OrganizationUpload.json';
 import { Web3Storage } from "web3.storage";
 import React, { Component } from 'react';
-import Navbar from './Navbar'
-import Main from './Main'
+import Navbar from './Navbar';
+import DirectMain from './DirectMain';
 import Web3 from 'web3';
-import './App.css';
+import './Direct.css';
 
 const client = new Web3Storage({token: ""});
 
@@ -112,7 +112,7 @@ class Direct extends Component {
         <Navbar account={this.state.account} />
         { this.state.loading
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
-          : <Main
+          : <DirectMain
               files={this.state.files}
               captureFile={this.captureFile}
               uploadFile={this.uploadFile}
