@@ -11290,12 +11290,13 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x6BDbcA94A6D82debdEf469a8eF3325f3A54b2E2C",
-      "transactionHash": "0x8663d97a5b64571137524fd32f74feb771c40d022e34d7edab580449155d5d6f"
+      "address": "0x584F429635792A1593432B82894954ef1bB4023e",
+      "transactionHash": "0x38b037d7ae7c80513b957531579705a2b9d41c3858f4586f962d17dac4f6c392"
     }
   },
   "schemaVersion": "3.4.9",
-  "updatedAt": "2022-12-05T02:14:25.429Z",
+  "updatedAt": "2022-12-05T05:46:21.482Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {}
   },

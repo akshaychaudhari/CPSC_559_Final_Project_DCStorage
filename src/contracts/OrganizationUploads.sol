@@ -8,7 +8,7 @@ import "./Organization.sol";
 import "./Membership.sol";
 import "./Direct.sol";
 
-contract OrganizationUpload is Direct {
+contract OrganizationUploads is Direct {
 
   string public name = "Crypto Box Organization Upload";
   uint public organizationFileCount = 0;
