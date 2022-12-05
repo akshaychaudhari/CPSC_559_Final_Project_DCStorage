@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Identicon from 'identicon.js';
-import cryptoBox from "../assets/logos/tLogo.png"
-import "../../node_modules/font-awesome/css/font-awesome.min.css"
+import cryptoBox from "../assets/logos/tLogo.png";
+import "../../node_modules/font-awesome/css/font-awesome.min.css";
+import Direct from "./Direct";
 
 class Navbar extends Component {
 
@@ -10,7 +11,7 @@ class Navbar extends Component {
       <nav style={{fontFamily: "Cursive"}} className="navbar navbar-light bg-light p-0 shadow bg-body rounded">
           <img src={cryptoBox} width="150" height="70" className="align-top ml-3 pt-1 pb-2" alt="CryptoBox App Logo" />
           <a style={{color: "#5c13ec", fontSize: "18px"}} class="nav-link" aria-current="page" href="#"> <span className='fa fa-globe' style={{fontSize: "20px"}}></span> Global </a>
-          <a style={{color: "#5c13ec", fontSize: "18px"}} class="nav-link" aria-current="page" href="#"> <span className='fa fa-share' style={{fontSize: "20px"}}></span> Direct </a>
+          <a style={{color: "#5c13ec", fontSize: "18px"}} class="nav-link" aria-current="page" href="/direct"> <span className='fa fa-share' style={{fontSize: "20px"}}></span> Direct </a>
           <a style={{color: "#5c13ec", fontSize: "18px"}} class="nav-link" aria-current="page" href="#"> <span className='fa fa-users' style={{fontSize: "17px"}}></span> Organization</a>
           <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search File:" aria-label="Search" />

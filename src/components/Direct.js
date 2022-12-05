@@ -1,16 +1,14 @@
-import DCStorage from '../abis/DCStorage.json'
+import DCStorage from '../abis/OrganizationUpload.json'
 import { Web3Storage } from "web3.storage";
 import React, { Component } from 'react';
 import Navbar from './Navbar'
 import Main from './Main'
 import Web3 from 'web3';
 import './App.css';
-import Direct from "./Direct";
-import {Route, Link, Routes} from "react-router-dom";
 
 const client = new Web3Storage({token: ""});
 
-class App extends Component {
+class Direct extends Component {
 
   async componentWillMount() {
     await this.loadWeb3()
@@ -110,7 +108,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className='App'>
+      <div>
         <Navbar account={this.state.account} />
         { this.state.loading
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
@@ -120,12 +118,9 @@ class App extends Component {
               uploadFile={this.uploadFile}
             />
         }
-        <Routes>
-        <Route exact to="/direct" component={Direct}/>
-        </Routes>
       </div>
     );
   }
 }
 
-export default App;
+export default Direct;
