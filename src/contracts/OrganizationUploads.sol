@@ -79,6 +79,15 @@ contract OrganizationUpload is Direct {
     delete organizationfiles[fileId];
   }
   
+  function toggleFlag(uint fileId, uint organizationId){
+    require(msg.sender == organizations[organizationId].Owner);
+    if(organizationfiles[fileId].isFlagged == false){
+        organizationfiles[fileId].isFlagged = true;
+    } else{
+        organizationfiles[fileId].isFlagged = false;
+    }
+  }
+
 }
 
 
