@@ -61,6 +61,40 @@ contract Membership is BuildOrganization{
         }
     }
 
+    function removeMembership(uint id, address userAddress) public {
+        require(msg.sender == organizations[id].Owner);
+        uint orgIndex;
+        uint memberIndex;
+        bool isMember = false;
+        bool isMemberConfirm = false;
+        uint[] memory orgIds = addressToOrganizations[userAddress];
+        address[] memory memberAddresses = organizationToAddresses[id];
+        for(uint i; i < orgIds.length; i++){
+            if(id == orgIds[i]){
+                orgIndex = i;
+                isMember = true;
+            }
+        }
+        for(uint i; i < memberAddresses.length; i++){
+            if(userAddress == memberAddresses[i]){
+                memberIndex = i;
+                isMemberConfirm = true;
+            }
+        }
+        if(isMember && isMemberConfirm){
+            for(uint i = orgIndex; i < orgIds.length - 1; i++){
+                addressToOrganizations[userAddress][i] = addressToOrganizations[userAddress][i+1];
+            }
+            delete addressToOrganizations[userAddress][addressToOrganizations[userAddress].length - 1];
+            addressToOrganizations[userAddress].length--;
+            for(uint i = memberIndex; i < memberAddresses.length - 1; i++){
+                organizationToAddresses[id][i] = organizationToAddresses[id][i+1]; 
+            }
+            delete organizationToAddresses[id][organizationToAddresses[id].length - 1];
+            organizationToAddresses[id].length--;
+        }
+    }
+
 }
 
 
