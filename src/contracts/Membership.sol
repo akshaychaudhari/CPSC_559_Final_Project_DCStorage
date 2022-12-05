@@ -8,9 +8,9 @@ import "./Organization.sol";
 
 contract Membership is BuildOrganization{
 
-    function joinOrganization(uint id, string passcode) public {
-        if(organizations[id].isPrivate == true && passcode != organizations[id].passcode){
-            return
+    function joinOrganization(uint id, string memory passcode) public {
+        if(organizations[id].Private == true && keccak256(abi.encodePacked(passcode)) != keccak256(abi.encodePacked(organizations[id].Passcode))){
+            return;
         }
 
         uint memberLimit = organizations[id].MemberLimit;

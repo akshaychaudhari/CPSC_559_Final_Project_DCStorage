@@ -20,7 +20,7 @@ contract BuildOrganization is DCStorage{
         address Owner;
         bool Private;
         uint MemberLimit;
-        string Passcode;
+        bytes32 Passcode;
         uint createdAt;
     }
 
@@ -45,7 +45,8 @@ contract BuildOrganization is DCStorage{
         }
 
         uint id = setId;
-        organizations.push(Organization(id, name, description, msg.sender, privateBool, memberLimit, passcode, now));
+        bytes32 userPasscode = keccak256(abi.encodePacked(passcode));
+        organizations.push(Organization(id, name, description, msg.sender, privateBool, memberLimit, userPasscode, now));
         organizationToOwner[id] = msg.sender;
         ownerOrganizationCount[msg.sender] = ownerOrganizationCount[msg.sender].add(1);
         addressToOrganizations[msg.sender].push(id);
@@ -64,11 +65,12 @@ contract BuildOrganization is DCStorage{
         }
 
         require(organizationToOwner[id] == msg.sender);
+        bytes32 userPasscode = keccak256(abi.encodePacked(passcode));
         organizations[id].Name = name;
         organizations[id].Description = description;
         organizations[id].Private = privateBool;
         organizations[id].MemberLimit = memberLimit;
-        organizations[id].Passcode = passcode;
+        organizations[id].Passcode = userPasscode;
     }
 
     function deleteOrganization(uint id) public {
