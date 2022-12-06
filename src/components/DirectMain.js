@@ -18,7 +18,7 @@ class DirectMain extends Component {
                     event.preventDefault()
                     const description = this.fileDescription.value
                     const recieverAddress = this.recieverAddress.value
-                    const oneTimeLink = this.oneTimeLink.value
+                    const oneTimeLink = this.oneTimeLink
                     this.props.uploadFile(description, recieverAddress, oneTimeLink)
                   }} >
                       <div className="form-group">
@@ -42,7 +42,7 @@ class DirectMain extends Component {
                             required />
                       </div>
                       <div class="form-check mt-4 mb-3">
-                        <input class="form-check-input" type="checkbox" value="" id="oneTimeLink" ref={(input) => { this.oneTimeLink = input }} />
+                        <input class="form-check-input" type="checkbox" value="" id="oneTimeLink" onChange={e => {this.oneTimeLink = e.target.checked}} />
                         <label class="form-check-label text-white" for="oneTimeLink">
                           One Time Link
                         </label>
