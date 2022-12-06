@@ -5,8 +5,6 @@ import Navbar from './Navbar'
 import Main from './Main'
 import Web3 from 'web3';
 import './App.css';
-import Direct from "./Direct";
-import {Route, Link, Routes} from "react-router-dom";
 
 const client = new Web3Storage({token: ""});
 
@@ -120,9 +118,6 @@ class App extends Component {
               uploadFile={this.uploadFile}
             />
         }
-        <Routes>
-        <Route exact path="/direct" element={<Direct/>}/>
-        </Routes>
       </div>
     );
   }
