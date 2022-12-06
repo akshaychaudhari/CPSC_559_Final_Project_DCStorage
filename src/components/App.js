@@ -1,4 +1,4 @@
-import DCStorage from '../abis/DCStorage.json'
+import OrganizationUploads from '../abis/OrganizationUploads.json'
 import { Web3Storage } from "web3.storage";
 import React, { Component } from 'react';
 import Navbar from './Navbar'
@@ -33,21 +33,21 @@ class App extends Component {
     const accounts = await web3.eth.getAccounts();
     this.setState({account: accounts[0]});
     const networkId = await web3.eth.net.getId()
-    const networkData = DCStorage.networks[networkId]
+    const networkData = OrganizationUploads.networks[networkId]
     if(networkData) {
-      const dcstorage = new web3.eth.Contract(DCStorage.abi, networkData.address)
-      this.setState({ dcstorage })
-      const filesCount = await dcstorage.methods.fileCount().call()
+      const organizationuploads = new web3.eth.Contract(OrganizationUploads.abi, networkData.address)
+      this.setState({ organizationuploads })
+      const filesCount = await organizationuploads.methods.fileCount().call()
       this.setState({ filesCount })
       for (var i = filesCount; i >= 1; i--) {
-        const file = await dcstorage.methods.files(i).call()
+        const file = await organizationuploads.methods.files(i).call()
         console.log(file)
         this.setState({
           files: [...this.state.files, file]
         })
       }
     } else {
-      window.alert('Error! The DCStorage contract not deployed on the detected network!');
+      window.alert('Error! The OrganizationUploads contract not deployed on the detected network!');
     }
     this.setState({loading: false})
   }
@@ -79,7 +79,7 @@ class App extends Component {
       if(this.state.type === ''){
         this.setState({type: 'none'})
       }
-      this.state.dcstorage.methods.uploadFile(rootCid, this.state.size, this.state.type, this.state.name, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
+      this.state.organizationuploads.methods.uploadFile(rootCid, this.state.size, this.state.type, this.state.name, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
         this.setState({
          loading: false,
          type: null,
@@ -96,7 +96,7 @@ class App extends Component {
     super(props)
     this.state = {
       account: '',
-      dcstorage: null,
+      organizationuploads: null,
       files: [],
       loading: false,
       type: null,
