@@ -9,7 +9,7 @@ import "./Organization.sol";
 contract Membership is BuildOrganization{
 
     function joinOrganization(uint id, string memory passcode) public {
-        if(organizations[id].Private == true && keccak256(abi.encodePacked(passcode)) != keccak256(abi.encodePacked(organizations[id].Passcode))){
+        if(organizations[id].Private == true && keccak256(abi.encodePacked(passcode)) != organizations[id].Passcode){
             return;
         }
 
