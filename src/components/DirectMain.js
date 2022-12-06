@@ -17,6 +17,7 @@ class DirectMain extends Component {
                   <form onSubmit={(event) => {
                     event.preventDefault()
                     const description = this.fileDescription.value
+                    const recieverAddress = this.recieverAddress
                     this.props.uploadFile(description)
                   }} >
                       <div className="form-group">
@@ -28,6 +29,22 @@ class DirectMain extends Component {
                             className="form-control"
                             placeholder="description..."
                             required />
+                      </div>
+                      <div className="form-group">
+                        <br></br>
+                          <input
+                            id="recieverAddress"
+                            type="text"
+                            ref={(input) => { this.recieverAddress = input }}
+                            className="form-control"
+                            placeholder="Reciever's Address..."
+                            required />
+                      </div>
+                      <div class="form-check mt-4 mb-3">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                        <label class="form-check-label text-white" for="flexCheckDefault">
+                          One Time Link
+                        </label>
                       </div>
                     <input type="file" onChange={this.props.captureFile} className="text-white pb-3"/>
                     <button type="submit" className="btn btn-block text-white" style={{backgroundColor: "#7c42ef"}}><b>Upload!</b></button>
