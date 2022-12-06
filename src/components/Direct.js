@@ -6,7 +6,7 @@ import DirectMain from './DirectMain';
 import Web3 from 'web3';
 import './Direct.css';
 
-const client = new Web3Storage({token: ""});
+const client = new Web3Storage({token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDUzQ2JjQjMzMmEwQTViQTgzMzk0Q2ViMkZDN0Q0MjI3ZWFEZEVBODIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2Njg5ODkyODU4NzgsIm5hbWUiOiJEQ1N0b3JhZ2UifQ.zHvbO3DBPsPmknHnKcT0ummPGKROWtXsqYVOs19Suz0"});
 
 class Direct extends Component {
 
@@ -69,7 +69,7 @@ class Direct extends Component {
     }
   }
 
-  uploadFile = async description => {
+  uploadFile = async (description, recieverAddress, oneTimeLink) => {
     // console.log("Submitting file to IPFS...")
     const rootCid = await client.put([this.state.rawFile]);
     const info = await client.status(rootCid);
@@ -79,7 +79,7 @@ class Direct extends Component {
       if(this.state.type === ''){
         this.setState({type: 'none'})
       }
-      this.state.organizationuploads.methods.uploadFile(rootCid, this.state.size, this.state.type, this.state.name, description).send({ from: this.state.account }).on('transactionHash', (hash) => {
+      this.state.organizationuploads.methods.uploadDirectFile(rootCid, this.state.size, this.state.type, this.state.name, description, recieverAddress, oneTimeLink).send({ from: this.state.account }).on('transactionHash', (hash) => {
         this.setState({
          loading: false,
          type: null,

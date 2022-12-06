@@ -17,9 +17,9 @@ class DirectMain extends Component {
                   <form onSubmit={(event) => {
                     event.preventDefault()
                     const description = this.fileDescription.value
-                    const recieverAddress = this.recieverAddress
+                    const recieverAddress = this.recieverAddress.value
                     const oneTimeLink = this.oneTimeLink
-                    this.props.uploadFile(description)
+                    this.props.uploadFile(description, recieverAddress, oneTimeLink)
                   }} >
                       <div className="form-group">
                         <br></br>
