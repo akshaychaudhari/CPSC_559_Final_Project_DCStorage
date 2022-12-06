@@ -37,7 +37,7 @@ class Direct extends Component {
     if(networkData) {
       const organizationuploads = new web3.eth.Contract(OrganizationUploads.abi, networkData.address)
       this.setState({ organizationuploads })
-      const currentRecieverFileIds = organizationuploads.methods.currentUserFileIds.call()
+      const currentRecieverFileIds = await organizationuploads.methods.currentUserFileIds().call({from: this.state.account})
       this.setState({ currentRecieverFileIds })
       for (var i = currentRecieverFileIds.length - 1; i >= 0; i--) {
         const file = await organizationuploads.methods.directfiles(currentRecieverFileIds[i]).call()
