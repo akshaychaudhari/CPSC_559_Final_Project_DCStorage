@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { convertBytes } from './helpers';
-import moment from 'moment'
+import moment from 'moment';
 
 class DirectMain extends Component {
 
@@ -66,6 +66,51 @@ class DirectMain extends Component {
                   </tr>
                 </thead>
                 { this.props.files.map((file, key) => {
+                  return(
+                    <thead style={{ 'fontSize': '12px' }} key={key}>
+                      <tr>
+                        <td>{file.fileId}</td>
+                        <td>{file.fileName}</td>
+                        <td>{file.fileDescription}</td>
+                        <td>{file.fileType}</td>
+                        <td>{convertBytes(file.fileSize)}</td>
+                        <td>{moment.unix(file.uploadTime).format('h:mm:ss A M/D/Y')}</td>
+                        <td>
+                          <a
+                            href={"https://etherscan.io/address/" + file.uploader}
+                            rel="noopener noreferrer"
+                            target="_blank">
+                            {file.uploader.substring(0,10)}...
+                          </a>
+                         </td>
+                        <td>
+                          <a
+                            onClick={() => this.props.triggerHandleOneTimeLink(file)}
+                            href={"https://w3s.link/ipfs/" + file.fileHash + "/" + file.fileName}
+                            rel="noopener noreferrer"
+                            target="_blank">
+                            {file.fileHash.substring(0,10)}...
+                          </a>
+                        </td>
+                      </tr>
+                    </thead>
+                  )
+                })}
+              </table>
+              <table className="table-sm table-bordered text-monospace" style={{ width: '1000px', maxHeight: '450px'}}>
+                <thead style={{ 'fontSize': '15px' }}>
+                  <tr style={{backgroundColor: "#5c13ec", color: "white"}}>
+                    <th scope="col" style={{ width: '10px'}}>ID</th>
+                    <th scope="col" style={{ width: '200px'}}>Name</th>
+                    <th scope="col" style={{ width: '230px'}}>Description</th>
+                    <th scope="col" style={{ width: '120px'}}>Type</th>
+                    <th scope="col" style={{ width: '90px'}}>Size</th>
+                    <th scope="col" style={{ width: '90px'}}>Datetime</th>
+                    <th scope="col" style={{ width: '120px'}}>Reciever</th>
+                    <th scope="col" style={{ width: '120px'}}>View File</th>
+                  </tr>
+                </thead>
+                { this.props.uploaderFiles.map((file, key) => {
                   return(
                     <thead style={{ 'fontSize': '12px' }} key={key}>
                       <tr>
