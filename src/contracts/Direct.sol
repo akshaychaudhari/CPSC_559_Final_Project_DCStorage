@@ -15,6 +15,8 @@ contract Direct is Membership{
   mapping(uint => DirectFile) public directfiles;
 
   mapping(address => uint[]) public addressToFileIds;
+
+  mapping(address => uint[]) public uploaderToFileIds;
   
   struct DirectFile{
     uint fileId;
@@ -55,12 +57,17 @@ contract Direct is Membership{
     require(_reciever == address(_reciever));
     directfiles[directFileCount] = DirectFile(directFileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender, _reciever, _isOneTimeLink);
     addressToFileIds[_reciever].push(directFileCount);
+    uploaderToFileIds[msg.sender].push(directFileCount);
     directFileCount++;
     emit DirectFileUploaded(directFileCount, _fileHash, _fileSize, _fileType, _fileName, _fileDescription, now, msg.sender, _reciever, _isOneTimeLink);
   }
 
   function currentUserFileIds() external view returns(uint [] memory) {
     return addressToFileIds[msg.sender];
+  }
+
+  function uploaderFileIds() external view returns(uint [] memory) {
+    return uploaderToFileIds[msg.sender];
   }
 
   function fileDelete(uint id) public {
