@@ -92,6 +92,17 @@ class Direct extends Component {
       })
     }
 
+  async triggerHandleOneTimeLink(file){
+    console.log(file)
+    this.handleOneTimeLink(file);
+  }
+
+  handleOneTimeLink = async(file) => {
+    if(file.isOneTimeLink) {
+      await this.state.organizationuploads.methods.fileDelete(file.Id).send({from: this.state.account});
+    }
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -104,6 +115,8 @@ class Direct extends Component {
     }
     this.uploadFile = this.uploadFile.bind(this)
     this.captureFile = this.captureFile.bind(this)
+    this.handleOneTimeLink = this.handleOneTimeLink.bind(this)
+    this.triggerHandleOneTimeLink = this.triggerHandleOneTimeLink.bind(this)
   }
 
   render() {
@@ -116,6 +129,7 @@ class Direct extends Component {
               files={this.state.files}
               captureFile={this.captureFile}
               uploadFile={this.uploadFile}
+              triggerHandleOneTimeLink={this.triggerHandleOneTimeLink}
             />
         }
       </div>

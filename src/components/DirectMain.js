@@ -85,6 +85,7 @@ class DirectMain extends Component {
                          </td>
                         <td>
                           <a
+                            onClick={() => this.props.triggerHandleOneTimeLink(file)}
                             href={"https://w3s.link/ipfs/" + file.fileHash + "/" + file.fileName}
                             rel="noopener noreferrer"
                             target="_blank">
