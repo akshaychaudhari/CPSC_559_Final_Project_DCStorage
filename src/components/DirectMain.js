@@ -52,6 +52,7 @@ class DirectMain extends Component {
                   </form>
               </div>
               <p>&nbsp;</p>
+              <h3 style={{color: "#5C13EC",fontFamily: "copperplate"}}> <span><i class="fa fa-inbox"></i></span> Inbox: { this.props.files.length } </h3>
               <table className="table-sm table-bordered text-monospace" style={{ width: '1000px', maxHeight: '450px'}}>
                 <thead style={{ 'fontSize': '15px' }}>
                   <tr style={{backgroundColor: "#5c13ec", color: "white"}}>
@@ -97,7 +98,8 @@ class DirectMain extends Component {
                   )
                 })}
               </table>
-              <table className="table-sm table-bordered text-monospace" style={{ width: '1000px', maxHeight: '450px'}}>
+              <h3 class="mt-5" style={{color: "#5C13EC",fontFamily: "copperplate"}}> <span><i class="fa fa-paper-plane"></i></span> Sent: { this.props.uploaderFiles.length } </h3>
+              <table className="table-sm table-bordered text-monospace mt-2 mb-5" style={{ width: '1000px', maxHeight: '450px'}}>
                 <thead style={{ 'fontSize': '15px' }}>
                   <tr style={{backgroundColor: "#5c13ec", color: "white"}}>
                     <th scope="col" style={{ width: '10px'}}>ID</th>
