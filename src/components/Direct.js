@@ -38,11 +38,19 @@ class Direct extends Component {
       const organizationuploads = new web3.eth.Contract(OrganizationUploads.abi, networkData.address);
       this.setState({ organizationuploads });
       const currentRecieverFileIds = await organizationuploads.methods.currentUserFileIds().call({from: this.state.account});
+      const currentUploaderFileIds = await organizationuploads.methods.uploaderFileIds().call({from: this.state.account});
       this.setState({ currentRecieverFileIds });
+      this.setState({ currentUploaderFileIds });
       for (var i = currentRecieverFileIds.length - 1; i >= 0; i--) {
         const file = await organizationuploads.methods.directfiles(currentRecieverFileIds[i]).call();
         this.setState({
           files: [...this.state.files, file]
+        })
+      }
+      for (var i = currentUploaderFileIds.length - 1; i >= 0; i--) {
+        const uploaderFile = await organizationuploads.methods.directfiles(currentUploaderFileIds[i]).call();
+        this.setState({
+          uploaderFiles: [...this.state.uploaderFiles, uploaderFile]
         })
       }
     } else {
@@ -108,6 +116,7 @@ class Direct extends Component {
       account: '',
       organizationuploads: null,
       files: [],
+      uploaderFiles: [],
       loading: false,
       type: null,
       name: null
@@ -126,6 +135,7 @@ class Direct extends Component {
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
           : <DirectMain
               files={this.state.files}
+              uploaderFiles={this.state.uploaderFiles}
               captureFile={this.captureFile}
               uploadFile={this.uploadFile}
               triggerHandleOneTimeLink={this.triggerHandleOneTimeLink}
