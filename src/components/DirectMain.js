@@ -122,10 +122,10 @@ class DirectMain extends Component {
                         <td>{moment.unix(file.uploadTime).format('h:mm:ss A M/D/Y')}</td>
                         <td>
                           <a
-                            href={"https://etherscan.io/address/" + file.uploader}
+                            href={"https://etherscan.io/address/" + file.reciever}
                             rel="noopener noreferrer"
                             target="_blank">
-                            {file.uploader.substring(0,10)}...
+                            {file.reciever.substring(0,10)}...
                           </a>
                          </td>
                         <td>
