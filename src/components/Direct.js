@@ -32,16 +32,15 @@ class Direct extends Component {
     const web3 = window.web3;
     const accounts = await web3.eth.getAccounts();
     this.setState({account: accounts[0]});
-    const networkId = await web3.eth.net.getId()
-    const networkData = OrganizationUploads.networks[networkId]
+    const networkId = await web3.eth.net.getId();
+    const networkData = OrganizationUploads.networks[networkId];
     if(networkData) {
-      const organizationuploads = new web3.eth.Contract(OrganizationUploads.abi, networkData.address)
-      this.setState({ organizationuploads })
-      const currentRecieverFileIds = await organizationuploads.methods.currentUserFileIds().call({from: this.state.account})
-      this.setState({ currentRecieverFileIds })
+      const organizationuploads = new web3.eth.Contract(OrganizationUploads.abi, networkData.address);
+      this.setState({ organizationuploads });
+      const currentRecieverFileIds = await organizationuploads.methods.currentUserFileIds().call({from: this.state.account});
+      this.setState({ currentRecieverFileIds });
       for (var i = currentRecieverFileIds.length - 1; i >= 0; i--) {
-        const file = await organizationuploads.methods.directfiles(currentRecieverFileIds[i]).call()
-        console.log(file)
+        const file = await organizationuploads.methods.directfiles(currentRecieverFileIds[i]).call();
         this.setState({
           files: [...this.state.files, file]
         })
@@ -49,7 +48,7 @@ class Direct extends Component {
     } else {
       window.alert('Error! The OrganizationUploads contract not deployed on the detected network!');
     }
-    this.setState({loading: false})
+    this.setState({loading: false});
   }
 
   captureFile = event => {
@@ -93,13 +92,13 @@ class Direct extends Component {
     }
 
   async triggerHandleOneTimeLink(file){
-    console.log(file)
     this.handleOneTimeLink(file);
   }
 
   handleOneTimeLink = async(file) => {
     if(file.isOneTimeLink) {
-      await this.state.organizationuploads.methods.fileDelete(file.Id).send({from: this.state.account});
+      await this.state.organizationuploads.methods.fileDelete(file.fileId).send({from: this.state.account});
+      window.location.reload();
     }
   }
 
