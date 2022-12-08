@@ -4,11 +4,11 @@ import React, { Component } from 'react';
 import Navbar from './Navbar'
 import Main from './Main'
 import Web3 from 'web3';
-import './App.css';
+import './ViewOrganization.css';
 
 const client = new Web3Storage({token: ""});
 
-class App extends Component {
+class ViewOrganization extends Component {
 
   async componentWillMount() {
     await this.loadWeb3()
@@ -123,4 +123,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default ViewOrganization;

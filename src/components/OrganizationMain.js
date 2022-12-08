@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { convertBytes } from './helpers';
 import moment from 'moment';
 
-class ViewOrganizationMain extends Component {
+class OrganizationMain extends Component {
 
   render() {
     return (
@@ -86,4 +86,4 @@ class ViewOrganizationMain extends Component {
   }
 }
 
-export default ViewOrganizationMain;
+export default OrganizationMain;
