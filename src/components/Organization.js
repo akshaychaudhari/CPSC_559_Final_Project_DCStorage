@@ -5,6 +5,7 @@ import Navbar from './Navbar'
 import Main from './Main'
 import Web3 from 'web3';
 import './Organization.css';
+import OrganizationMain from './OrganizationMain';
 
 const client = new Web3Storage({token: ""});
 
@@ -112,7 +113,7 @@ class Organization extends Component {
         <Navbar account={this.state.account} />
         { this.state.loading
           ? <div id="loader" className="text-center mt-5"><p>Loading...</p></div>
-          : <Main
+          : <OrganizationMain
               files={this.state.files}
               captureFile={this.captureFile}
               uploadFile={this.uploadFile}
